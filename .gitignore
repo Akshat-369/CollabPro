@@ -1,0 +1,46 @@
+# --- General & SYSTEM ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+*.tmp
+logs/
+temp/
+tmp/
+
+# --- Frontend (React) ---
+Frontend/node_modules/
+Frontend/dist/
+Frontend/build/
+Frontend/coverage/
+Frontend/.env.local
+Frontend/.env.development.local
+Frontend/.env.test.local
+Frontend/.env.production.local
+# Keep package-lock.json and package.json
+
+# --- Backend (Spring Boot) ---
+Backend/target/
+Backend/uploads/
+Backend/.settings/
+Backend/.classpath
+Backend/.project
+Backend/.factorypath
+Backend/.springBeans
+Backend/.sts4-cache
+Backend/help.md
+
+# --- Backend Junk Logs (Specific) ---
+Backend/backend_log*.txt
+Backend/final_*_log.txt
+Backend/crash.log
+Backend/server.log
+Backend/startup_debug.log
+Backend/deps.txt
+# Keep schema.txt (likely documentation)
+
+# --- Root Root Junk ---
+test_api.js
+test_api_auth.js
+test_saved_projects.js
