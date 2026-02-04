@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CollabPro - Find your dream project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Poppins', 'sans-serif'],
+            },
+            colors: {
+              'mine-shaft': {
+                50 : 'var(--mine-shaft-50)',
+                100: 'var(--mine-shaft-100)',
+                200: 'var(--mine-shaft-200)',
+                300: 'var(--mine-shaft-300)',
+                400: 'var(--mine-shaft-400)',
+                500: 'var(--mine-shaft-500)',
+                600: 'var(--mine-shaft-600)',
+                700: 'var(--mine-shaft-700)',
+                800: 'var(--mine-shaft-800)',
+                900: 'var(--mine-shaft-900)',
+                950: 'var(--mine-shaft-950)',
+              },
+              'bright-sun': {
+                50 : 'var(--bright-sun-50)',
+                100: 'var(--bright-sun-100)',
+                200: 'var(--bright-sun-200)',
+                300: 'var(--bright-sun-300)',
+                400: 'var(--bright-sun-400)',
+                500: 'var(--bright-sun-500)',
+                600: 'var(--bright-sun-600)',
+                700: 'var(--bright-sun-700)',
+                800: 'var(--bright-sun-800)',
+                900: 'var(--bright-sun-900)',
+                950: 'var(--bright-sun-950)',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      :root {
+        /* Light Mode Palette (Inverted) */
+        --mine-shaft-50:  #1a1a1a;  /* Text Primary (was white) */
+        --mine-shaft-100: #2d2d2d;
+        --mine-shaft-200: #4b5563;
+        --mine-shaft-300: #6b7280;  /* Description Text */
+        --mine-shaft-400: #9ca3af;  /* Muted Text */
+        --mine-shaft-500: #d1d5db;
+        --mine-shaft-600: #e5e7eb;  /* Borders */
+        --mine-shaft-700: #e5e7eb;  /* Borders */
+        --mine-shaft-800: #f3f4f6;  /* Elements/Inputs Bg */
+        --mine-shaft-900: #ffffff;  /* Cards Bg */
+        --mine-shaft-950: #f9fafb;  /* Body Bg (Off-white) */
+
+        /* Blue for Light Mode - Replacing Yellow */
+        --bright-sun-50 : #eff6ff;
+        --bright-sun-100: #dbeafe;
+        --bright-sun-200: #bfdbfe;
+        --bright-sun-300: #93c5fd;
+        --bright-sun-400: #2563eb; /* Blue 600 */
+        --bright-sun-500: #1d4ed8; /* Blue 700 */
+        --bright-sun-600: #1e40af;
+        --bright-sun-700: #1e3a8a;
+        --bright-sun-800: #172554;
+        --bright-sun-900: #0f172a;
+        --bright-sun-950: #020617;
+      }
+
+      .dark {
+        /* Dark Mode Palette (Original) */
+        --mine-shaft-50:  #f6f6f6;
+        --mine-shaft-100: #e7e7e7;
+        --mine-shaft-200: #d1d1d1;
+        --mine-shaft-300: #b0b0b0;
+        --mine-shaft-400: #888888;
+        --mine-shaft-500: #6d6d6d;
+        --mine-shaft-600: #5d5d5d;
+        --mine-shaft-700: #4f4f4f;
+        --mine-shaft-800: #454545;
+        --mine-shaft-900: #3d3d3d;
+        --mine-shaft-950: #2d2d2d;
+
+        /* Yellow/Orange for Dark Mode (Original) */
+        --bright-sun-50 : #fffbeb;
+        --bright-sun-100: #fff3c6;
+        --bright-sun-200: #ffe588;
+        --bright-sun-300: #ffd149;
+        --bright-sun-400: #ffbd20;
+        --bright-sun-500: #f99b07;
+        --bright-sun-600: #dd7302;
+        --bright-sun-700: #b75006;
+        --bright-sun-800: #943c0c;
+        --bright-sun-900: #7a330d;
+        --bright-sun-950: #461902;
+      }
+
+      body {
+        background-color: var(--mine-shaft-950);
+        color: var(--mine-shaft-50);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* Custom scrollbar for better aesthetics */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--mine-shaft-950); 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--mine-shaft-700); 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--mine-shaft-600); 
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+server:
+  port: 8080
+  tomcat:
+    max-http-form-post-size: 50MB
+    max-swallow-size: 50MB
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: akshatlimbachiya548@gmail.com
+    password: ybqmekhkmllnmzfn
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 880012654940-u6h95r0trq6og5bar9lifkl39nkffidr.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+  application:
+    name: collabpro-backend
+  datasource:
+    url: jdbc:mysql://localhost:3306/CollabPro2?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: "@kshat369"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+    show-sql: true
+
+razorpay:
+  key-id: ${RAZORPAY_KEY_ID:rzp_test_S2ypsM1Yy2EF0e}
+  key-secret: ${RAZORPAY_KEY_SECRET:fQpjkO0Sc6EOD00lEJPKN5S1}
+  # INSTRUCTIONS:
+  # 1. Replace INSERT_RAZORPAY_KEY_ID_HERE with your actual Razorpay Key ID
+  # 2. Replace INSERT_RAZORPAY_KEY_SECRET_HERE with your actual Razorpay Key Secret
+  # Alternatively, you can set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET as environment variables.
