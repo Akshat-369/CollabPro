@@ -108,8 +108,12 @@ public class TaskService {
         if (isManager) {
             updateTaskFromDTO(task, taskDTO);
         } else if (isAssignee) {
-            if (taskDTO.getStatus() != null)
+            if (taskDTO.getStatus() != null) {
+                if ("Approved".equalsIgnoreCase(taskDTO.getStatus())) {
+                    throw new RuntimeException("Unauthorized: Only managers can approve tasks");
+                }
                 task.setStatus(taskDTO.getStatus());
+            }
             if (taskDTO.getPaymentStatus() != null)
                 task.setPaymentStatus(taskDTO.getPaymentStatus());
 

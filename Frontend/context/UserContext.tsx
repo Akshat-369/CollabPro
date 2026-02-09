@@ -17,6 +17,7 @@ interface UserContextType {
   getJobApplications: (jobId: string) => Candidate[];
   myApplications: Record<string, string>;
   myApplicationIds: Record<string, number>;
+  myApplicationsData: Record<string, any>; // Full application data including interview
   updateCandidateStatus: (jobId: string, candidateId: number, status: 'applicants' | 'invited' | 'offered' | 'hired' | 'rejected', interview?: { date: string; time: string }) => Promise<void>;
   respondToOffer: (projectId: string, accepted: boolean) => Promise<void>;
   updateUserProfile: (profile: Partial<UserProfile>) => void;
@@ -34,6 +35,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [savedJobs, setSavedJobs] = useState<string[]>(['3']); 
   const [myApplications, setMyApplications] = useState<Record<string, string>>({}); 
   const [myApplicationIds, setMyApplicationIds] = useState<Record<string, number>>({});
+  const [myApplicationsData, setMyApplicationsData] = useState<Record<string, any>>({});
   
   const [userProfile, setUserProfile] = useState<UserProfile>({
     name: "",
@@ -224,6 +226,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setAppliedJobs(apps.map(a => a.projectId.toString()));
             setMyApplications(apps.reduce((acc, curr) => ({ ...acc, [curr.projectId]: curr.status }), {}));
             setMyApplicationIds(apps.reduce((acc, curr: any) => ({ ...acc, [curr.projectId]: curr.applicationId }), {}));
+            setMyApplicationsData(apps.reduce((acc, curr: any) => ({ ...acc, [curr.projectId]: curr }), {}));
         } catch (e) {}
     } catch (error) {
         console.error("Failed to refresh user", error);
@@ -239,9 +242,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const value = useMemo(() => ({ 
       appliedJobs, savedJobs, jobApplications, currentUserCandidateId: CURRENT_USER_ID,
       userProfile, applyForJob, toggleSaveJob, hasApplied, isSaved, getJobApplications,
-      myApplications, myApplicationIds, updateCandidateStatus, respondToOffer, updateUserProfile, refreshUser
+      myApplications, myApplicationIds, myApplicationsData, updateCandidateStatus, respondToOffer, updateUserProfile, refreshUser
   }), [appliedJobs, savedJobs, jobApplications, userProfile, applyForJob, toggleSaveJob, hasApplied, isSaved, 
-       getJobApplications, myApplications, myApplicationIds, updateCandidateStatus, respondToOffer, updateUserProfile, refreshUser]);
+       getJobApplications, myApplications, myApplicationIds, myApplicationsData, updateCandidateStatus, respondToOffer, updateUserProfile, refreshUser]);
 
   return (
     <UserContext.Provider value={value}>

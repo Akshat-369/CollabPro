@@ -9,9 +9,10 @@ interface PaymentTabProps {
   tasks: Task[];
   onStatusChange: (taskId: string, newStatus: string) => void;
   onRefresh?: () => void;
+  membersData?: any[];
 }
 
-const PaymentTab: React.FC<PaymentTabProps> = ({ tasks, onStatusChange, onRefresh }) => {
+const PaymentTab: React.FC<PaymentTabProps> = ({ tasks, onStatusChange, onRefresh, membersData }) => {
   // Calculate stats based on paymentStatus
   const stats = useMemo(() => {
     let totalPaid = 0;
@@ -82,6 +83,10 @@ const PaymentTab: React.FC<PaymentTabProps> = ({ tasks, onStatusChange, onRefres
   };
 
   const getUserImage = (name?: string) => {
+      if (!name) return IMAGES.currentUser;
+      const member = membersData?.find((m: any) => m.name === name);
+      if (member?.profileImage) return member.profileImage;
+
       if (name?.includes('Shivam')) return IMAGES.testimonials.user1;
       if (name?.includes('Abhishek')) return IMAGES.testimonials.user2;
       if (name?.includes('Swapnil')) return IMAGES.testimonials.user3;

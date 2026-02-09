@@ -40,7 +40,7 @@ const BrowsePage: React.FC = () => {
      getPersistedState('browse_historyTab', 'Applied') as 'Applied' | 'In Progress' | 'Saved' | 'Offered'
   );
   
-  const { appliedJobs, savedJobs, toggleSaveJob, getJobApplications, currentUserCandidateId, updateCandidateStatus, myApplications, respondToOffer } = useUser();
+  const { appliedJobs, savedJobs, toggleSaveJob, getJobApplications, currentUserCandidateId, updateCandidateStatus, myApplications, myApplicationsData, respondToOffer } = useUser();
   
   // Sorting
   const [sortOption, setSortOption] = useState(() => getPersistedState('browse_sortOption', 'relevance'));
@@ -120,9 +120,8 @@ const BrowsePage: React.FC = () => {
   // Helper to get interview info for specific job
   const getInterviewInfo = (jobId: string) => {
       if (historyTab !== 'In Progress') return undefined;
-      const apps = getJobApplications(jobId);
-      const myApp = apps.find(c => c.id === currentUserCandidateId);
-      return myApp?.interview;
+      const appData = myApplicationsData[jobId];
+      return appData?.interview;
   };
 
   const handleOfferResponse = async (jobId: string, accepted: boolean) => {

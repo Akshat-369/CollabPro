@@ -16,9 +16,10 @@ interface TaskBoardProps {
   onUpdateTask: (taskId: string, updates: Partial<Task>) => void;
   onDeleteTask: (taskId: string) => void;
   isManager?: boolean;
+  membersData?: any[];
 }
 
-const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, jobId, onAddTask, onUpdateTask, onDeleteTask, isManager }) => {
+const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, jobId, onAddTask, onUpdateTask, onDeleteTask, isManager, membersData }) => {
   const { userProfile } = useUser();
   const { getJobApplications } = useUser();
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
@@ -43,37 +44,50 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, jobId, onAddTask, o
   
   React.useEffect(() => {
      if (!jobId) return;
+
+     if (membersData && membersData.length > 0) {
+        // Use passed membersData
+        const helper = async () => {
+             const names = membersData.map((m: any) => m.name);
+             try {
+                const project: any = await ProjectService.getProject(jobId);
+                const ownerName = project.client?.name;
+                if (ownerName && !names.includes(ownerName)) {
+                    names.push(ownerName);
+                }
+             } catch (err) {
+                 // ignore
+             }
+             setMembers(names);
+        };
+        helper();
+        return;
+     }
+
+     // Fallback if membersData not provided (legacy)
      const fetchMembers = async () => {
          try {
-             const candidates = await ProjectService.getProjectCandidates(jobId);
-             const hired = candidates.filter((c: any) => c.status === 'hired').map((c: any) => c.name);
-             
-             // Optionally add self (manager) if needed, but 'getProjectCandidates' doesn't return manager.
-             // We can assume the manager is 'You' or fetched from user profile? 
-             // Ideally we should fetch Project details to get the creator name.
-             // For now, let's stick to hired members as "Assignable".
-             // If manager needs to assign to themselves, they should be in the "Members" or we can append explicitly if we knew their name.
-             // Let's invoke `getJob` from context or passed props if available?
-             // TaskBoard doesn't receive `job` object, only `jobId`.
-             // But we can use `ProjectService.getProject(jobId)` to get owner name.
+             // We can use getProjectMembers here too instead of candidates to be consistent
+             const members = await ProjectService.getProjectMembers(jobId);
+             const names = members.map((m: any) => m.name);
              
              try {
                 const project: any = await ProjectService.getProject(jobId);
                 const ownerName = project.client?.name;
-                if (ownerName && !hired.includes(ownerName)) {
-                    hired.push(ownerName);
+                if (ownerName && !names.includes(ownerName)) {
+                    names.push(ownerName);
                 }
              } catch (err) {
-                 // ignore if fails to get project details
+                 // ignore
              }
              
-             setMembers(hired);
+             setMembers(names);
          } catch (e) {
              console.error("Failed to load project members", e);
          }
      };
      fetchMembers();
-  }, [jobId]);
+  }, [jobId, membersData]);
 
   // Drag Handlers
   const handleDragStart = (e: React.DragEvent, taskId: string) => {
@@ -89,6 +103,11 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, jobId, onAddTask, o
 
      // RULE: Only managers or assigned users can update status
      if (!isManager) {
+         if (status === 'Approved') {
+             alert('Only managers can approve tasks');
+             setDraggedTaskId(null);
+             return;
+         }
          const task = initialTasks.find(t => t.id === draggedTaskId);
          if (task?.assignedTo !== userProfile.name) {
              setDraggedTaskId(null);
@@ -256,6 +275,7 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, jobId, onAddTask, o
                         isDragged={draggedTaskId === task.id}
                         onDragStart={handleDragStart}
                         onClick={setSelectedTask}
+                        membersData={membersData}
                     />
                 ))}
                 {columnTasks.length === 0 && (
@@ -302,6 +322,7 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, jobId, onAddTask, o
                 onFileChange={handleFileChange}
                 currentUser={userProfile.email}
                 onDeleteAttachment={handleDeleteAttachment}
+                membersData={membersData}
             />
         )}
 

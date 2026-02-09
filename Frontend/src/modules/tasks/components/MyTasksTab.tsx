@@ -12,9 +12,10 @@ interface MyTasksTabProps {
   currentUserEmail?: string;
   onUpdateTask: (taskId: string, updates: Partial<Task>) => void;
   activeProjectId?: string;
+  membersData?: any[];
 }
 
-const MyTasksTab: React.FC<MyTasksTabProps> = ({ tasks, currentUser, currentUserEmail, onUpdateTask, activeProjectId }) => {
+const MyTasksTab: React.FC<MyTasksTabProps> = ({ tasks, currentUser, currentUserEmail, onUpdateTask, activeProjectId, membersData }) => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [newComment, setNewComment] = useState('');
 
@@ -96,6 +97,7 @@ const MyTasksTab: React.FC<MyTasksTabProps> = ({ tasks, currentUser, currentUser
                         isDragged={false} // No drag in this view
                         onDragStart={() => {}} 
                         onClick={setSelectedTask}
+                        membersData={membersData}
                     />
                 ))}
             </div>
@@ -133,6 +135,7 @@ const MyTasksTab: React.FC<MyTasksTabProps> = ({ tasks, currentUser, currentUser
                          alert("Failed to delete attachment");
                     }
                 }}
+                membersData={membersData}
             />
         )}
     </div>

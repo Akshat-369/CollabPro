@@ -148,6 +148,17 @@ public class ApplicationService {
                             status = app.getStatus().name().toLowerCase();
 
                         map.put("status", status);
+                        
+                        // Add interview details if they exist
+                        if (app.getInterviewDate() != null || app.getInterviewTime() != null) {
+                            java.util.Map<String, String> interview = new java.util.HashMap<>();
+                            if (app.getInterviewDate() != null)
+                                interview.put("date", app.getInterviewDate());
+                            if (app.getInterviewTime() != null)
+                                interview.put("time", app.getInterviewTime());
+                            map.put("interview", interview);
+                        }
+                        
                         return map;
                     })
                     .collect(java.util.stream.Collectors.toList());

@@ -6,6 +6,7 @@ import ProjectService from '../../projects/service/project.service';
 interface WorkerPaymentTabProps {
   tasks: Task[];
   onRefresh?: () => void;
+  membersData?: any[];
 }
 
 const WorkerPaymentTab: React.FC<WorkerPaymentTabProps> = ({ tasks, onRefresh }) => {

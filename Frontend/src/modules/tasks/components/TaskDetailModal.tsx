@@ -16,10 +16,11 @@ interface TaskDetailModalProps {
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   currentUser?: string;
   onDeleteAttachment?: (attachmentId: string) => void;
+  membersData?: any[];
 }
 
 const TaskDetailModal: React.FC<TaskDetailModalProps> = ({ 
-  task, newComment, isManager, onClose, onEdit, onDelete, onCommentChange, onAddComment, onFileChange, currentUser, onDeleteAttachment
+  task, newComment, isManager, onClose, onEdit, onDelete, onCommentChange, onAddComment, onFileChange, currentUser, onDeleteAttachment, membersData
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [attachmentToDelete, setAttachmentToDelete] = useState<string | null>(null);
@@ -39,6 +40,10 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   };
 
   const getUserImage = (name?: string) => {
+      if (!name) return IMAGES.currentUser;
+      const member = membersData?.find((m: any) => m.name === name);
+      if (member?.profileImage) return member.profileImage;
+
       if (name?.includes('Shivam')) return IMAGES.testimonials.user1;
       if (name?.includes('Abhishek')) return IMAGES.testimonials.user2;
       if (name?.includes('Swapnil')) return IMAGES.testimonials.user3;

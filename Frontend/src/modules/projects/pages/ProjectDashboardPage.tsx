@@ -25,13 +25,18 @@ const ProjectDashboardPage: React.FC = () => {
   
   const [activeTab, setActiveTab] = useState('overview');
 
-  // Fetch Tasks Dynamically
+  // Fetch Tasks & Members Dynamically
   const tasks = id ? getProjectTasks(id) : [];
+  const [members, setMembers] = useState<any[]>([]);
 
   React.useEffect(() => {
     if (id) {
         refreshTasks(id);
         refreshJob(id);
+        // Fetch members ensuring consistency across tabs
+        import('../../projects/service/project.service').then(module => {
+             module.default.getProjectMembers(id).then(setMembers).catch(err => console.error("Failed to load members", err));
+        });
     }
   }, [id, refreshTasks, refreshJob]);
 
@@ -118,6 +123,7 @@ const ProjectDashboardPage: React.FC = () => {
                 onUpdateTask={handleTaskUpdate}
                 onDeleteTask={handleTaskDelete}
                 isManager={job.postedByMe}
+                membersData={members}
             />
         )}
         {activeTab === 'my-task' && (
@@ -127,13 +133,14 @@ const ProjectDashboardPage: React.FC = () => {
                 currentUser={userProfile.name || "Marshal"} 
                 currentUserEmail={userProfile.email}
                 onUpdateTask={handleTaskUpdate}
+                membersData={members}
             />
         )}
         {activeTab === 'members' && <MembersTab jobId={job.id} isManager={job.postedByMe} />}
         {activeTab === 'payment' && (
             job.postedByMe 
-            ? <PaymentTab tasks={tasks} onStatusChange={handleStatusChange} onRefresh={() => id && refreshTasks(id)} />
-            : <WorkerPaymentTab tasks={tasks} onRefresh={() => id && refreshTasks(id)} />
+            ? <PaymentTab tasks={tasks} onStatusChange={handleStatusChange} onRefresh={() => id && refreshTasks(id)} membersData={members} />
+            : <WorkerPaymentTab tasks={tasks} onRefresh={() => id && refreshTasks(id)} membersData={members} />
         )}
       </div>
       <Footer />

@@ -26,9 +26,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ job, isSaved = false, onToggl
 
   const formatDateDisplay = (dateStr: string) => {
       if (!dateStr) return '';
-      const date = new Date(dateStr);
-      // Format like: "Sun, 21 August"
-      return date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'long' });
+      // Format like: "August 21, 2024" to match CandidateCard
+      return new Date(dateStr).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   };
 
   const formatTimeDisplay = (timeStr: string) => {
@@ -107,13 +106,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ job, isSaved = false, onToggl
                  </button>
              </div>
         ) : interviewDetails ? (
-            <div className="mt-2 flex items-center gap-2 text-sm">
-                <div className="p-1 rounded bg-transparent text-bright-sun-400">
-                    <Calendar size={18} />
+            <div className="mt-3">
+                <div className="flex items-center gap-2 text-xs text-mine-shaft-100 bg-mine-shaft-800/30 p-2 rounded-lg border-l-2 border-bright-sun-400">
+                    <Calendar size={14} className="text-mine-shaft-400" />
+                    <span>
+                        Interview: <span className="text-mine-shaft-50">{formatDateDisplay(interviewDetails.date)}</span> at <span className="text-bright-sun-400 font-bold">{formatTimeDisplay(interviewDetails.time)}</span>
+                    </span>
                 </div>
-                <span className="text-mine-shaft-100 font-medium">
-                    {formatDateDisplay(interviewDetails.date)} • {formatTimeDisplay(interviewDetails.time)}
-                </span>
             </div>
         ) : (
              <div className="mt-auto pt-2">
