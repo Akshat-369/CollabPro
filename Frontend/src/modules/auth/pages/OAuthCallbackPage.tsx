@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useUser } from './context/UserContext';
-import AuthService from './src/modules/auth/service/auth.service';
+import { useUser } from '../../../../context/UserContext';
+import AuthService from '../service/auth.service';
 
 interface OAuthCallbackPageProps {
     onLogin: () => void;

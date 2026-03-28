@@ -15,7 +15,7 @@ public class ApplicationController {
     private final ApplicationService applicationService;
 
     @PostMapping("/{projectId}/apply")
-    public ResponseEntity<Void> applyForProject(
+    public ResponseEntity<?> applyForProject(
             @PathVariable Long projectId,
             @RequestParam("coverLetter") String coverLetter,
             @RequestParam(value = "resume", required = false) MultipartFile resume,
@@ -29,7 +29,7 @@ public class ApplicationController {
             applicationService.applyForProject(projectId, principal.getName(), coverLetter, resume);
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

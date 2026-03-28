@@ -71,7 +71,13 @@ const ProjectDetailsPage: React.FC = () => {
                                </button>
                            ) : (
                                <button 
-                                    onClick={() => navigate(`/apply/${job.id}`)}
+                                    onClick={() => {
+                                        if (job.postedByMe) {
+                                            alert("You cannot apply to your own project");
+                                        } else {
+                                            navigate(`/apply/${job.id}`);
+                                        }
+                                    }}
                                     className="flex-1 md:flex-none bg-mine-shaft-800 text-bright-sun-400 px-8 py-3 rounded-xl font-bold hover:bg-bright-sun-400 hover:text-black transition-colors border border-mine-shaft-700"
                                >
                                     Apply

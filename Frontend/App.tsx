@@ -21,7 +21,7 @@ import ProfilePage from './src/modules/profile/pages/ProfilePage';
 import CandidateProfilePage from './src/modules/candidates/pages/CandidateProfilePage';
 
 
-import OAuthCallbackPage from './OAuthCallbackPage';
+import OAuthCallbackPage from './src/modules/auth/pages/OAuthCallbackPage';
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(AuthService.isAuthenticated());

@@ -45,6 +45,10 @@ const ApplyPage: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+      if (job?.postedByMe) {
+          alert("You cannot apply to your own project");
+          return;
+      }
       console.log("Submitting Application:", formData);
       if (id) {
           await applyForJob(id, formData);

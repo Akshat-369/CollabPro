@@ -48,35 +48,37 @@
     </script>
     <style>
       :root {
-        /* Light Mode Palette (Inverted) */
-        --mine-shaft-50:  #1a1a1a;  /* Text Primary (was white) */
-        --mine-shaft-100: #2d2d2d;
-        --mine-shaft-200: #4b5563;
-        --mine-shaft-300: #6b7280;  /* Description Text */
-        --mine-shaft-400: #9ca3af;  /* Muted Text */
-        --mine-shaft-500: #d1d5db;
-        --mine-shaft-600: #e5e7eb;  /* Borders */
-        --mine-shaft-700: #e5e7eb;  /* Borders */
-        --mine-shaft-800: #f3f4f6;  /* Elements/Inputs Bg */
-        --mine-shaft-900: #ffffff;  /* Cards Bg */
-        --mine-shaft-950: #f9fafb;  /* Body Bg (Off-white) */
+        /* ── Light Mode Palette ── Premium Neutral SaaS (Linear / Notion style) ── */
 
-        /* Blue for Light Mode - Replacing Yellow */
-        --bright-sun-50 : #eff6ff;
-        --bright-sun-100: #dbeafe;
-        --bright-sun-200: #bfdbfe;
-        --bright-sun-300: #93c5fd;
-        --bright-sun-400: #2563eb; /* Blue 600 */
-        --bright-sun-500: #1d4ed8; /* Blue 700 */
-        --bright-sun-600: #1e40af;
-        --bright-sun-700: #1e3a8a;
-        --bright-sun-800: #172554;
-        --bright-sun-900: #0f172a;
-        --bright-sun-950: #020617;
+        /*  Darkest → text, headings */
+        --mine-shaft-50:  #1c1f26;   /* Charcoal – primary headings / strong text     */
+        --mine-shaft-100: #2d3341;   /* Near-black – sub-headings                     */
+        --mine-shaft-200: #424a5c;   /* Dark slate – body text                        */
+        --mine-shaft-300: #6b7589;   /* Medium gray – secondary / description text    */
+        --mine-shaft-400: #9aa2b1;   /* Muted gray – placeholders, timestamps         */
+        --mine-shaft-500: #c3c9d4;   /* Light gray – dividers, inactive icons         */
+        --mine-shaft-600: #dde0e7;   /* Pale gray – subtle borders                    */
+        --mine-shaft-700: #e8eaef;   /* Very pale – card borders, hairlines           */
+        --mine-shaft-800: #f0f2f5;   /* Near-white – input backgrounds, inner panels  */
+        --mine-shaft-900: #ffffff;   /* Pure white – card surfaces                    */
+        --mine-shaft-950: #f1f2f4;   /* Soft neutral – page background (not pure white)*/
+
+        /* ── Brand blue for Light Mode (replaces yellow) ── */
+        --bright-sun-50 : #eef4ff;
+        --bright-sun-100: #dce8ff;
+        --bright-sun-200: #b9d1ff;
+        --bright-sun-300: #7aadff;
+        --bright-sun-400: #2563eb;   /* Primary action blue                           */
+        --bright-sun-500: #1a55d4;   /* Hover state – slightly deeper                 */
+        --bright-sun-600: #1546b8;
+        --bright-sun-700: #1039a0;
+        --bright-sun-800: #0d2d82;
+        --bright-sun-900: #0a2060;
+        --bright-sun-950: #051240;
       }
 
       .dark {
-        /* Dark Mode Palette (Original) */
+        /* Dark Mode Palette (Original – untouched) */
         --mine-shaft-50:  #f6f6f6;
         --mine-shaft-100: #e7e7e7;
         --mine-shaft-200: #d1d1d1;
@@ -89,7 +91,7 @@
         --mine-shaft-900: #3d3d3d;
         --mine-shaft-950: #2d2d2d;
 
-        /* Yellow/Orange for Dark Mode (Original) */
+        /* Yellow/Orange for Dark Mode (Original – untouched) */
         --bright-sun-50 : #fffbeb;
         --bright-sun-100: #fff3c6;
         --bright-sun-200: #ffe588;
@@ -109,20 +111,92 @@
         transition: background-color 0.3s ease, color 0.3s ease;
       }
 
-      /* Custom scrollbar for better aesthetics */
-      ::-webkit-scrollbar {
-        width: 8px;
+      /* ── Light-mode semantic color overrides ──────────────────────────────────
+         Status badges, focus rings, and hardcoded semantic colors look too harsh
+         against a light background. These overrides make them softer and more
+         refined — they do NOT apply in dark mode (scoped to html:not(.dark)).
+      ──────────────────────────────────────────────────────────────────────── */
+      html:not(.dark) {
+        /* Status badge: green (Active / Done / Approved) → softer sage green */
+        --status-green-bg:    rgba(22, 163, 74, 0.08);
+        --status-green-text:  #166534;
+        --status-green-border:rgba(22, 163, 74, 0.20);
+
+        /* Status badge: red (Closed / Rejected) → softer rose */
+        --status-red-bg:    rgba(220, 38, 38, 0.07);
+        --status-red-text:  #991b1b;
+        --status-red-border:rgba(220, 38, 38, 0.18);
+
+        /* Status badge: blue (In Progress) → soft indigo */
+        --status-blue-bg:    rgba(37, 99, 235, 0.08);
+        --status-blue-text:  #1e3a8a;
+        --status-blue-border:rgba(37, 99, 235, 0.20);
+
+        /* Status badge: orange (Pending) → soft amber */
+        --status-orange-bg:    rgba(234, 88, 12, 0.08);
+        --status-orange-text:  #92400e;
+        --status-orange-border:rgba(234, 88, 12, 0.20);
       }
-      ::-webkit-scrollbar-track {
-        background: var(--mine-shaft-950); 
+
+      /* ── Light-mode: card + interactive surface refinements ──────────────── */
+      html:not(.dark) .bg-mine-shaft-900 {
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+        border-color: var(--mine-shaft-700) !important;
       }
-      ::-webkit-scrollbar-thumb {
-        background: var(--mine-shaft-700); 
-        border-radius: 4px;
+      html:not(.dark) .hover\:shadow-lg:hover {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06) !important;
       }
-      ::-webkit-scrollbar-thumb:hover {
-        background: var(--mine-shaft-600); 
+
+      /* ── Light-mode: input focus ring ────────────────────────────────────── */
+      html:not(.dark) input:focus,
+      html:not(.dark) textarea:focus,
+      html:not(.dark) select:focus {
+        border-color: var(--bright-sun-400) !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+        outline: none;
       }
+
+      /* ── Light-mode: softer green status badge overrides ─────────────────── */
+      html:not(.dark) .text-green-500  { color: var(--status-green-text)  !important; }
+      html:not(.dark) .bg-green-500\/10 { background: var(--status-green-bg)   !important; }
+      html:not(.dark) .border-green-500\/20 { border-color: var(--status-green-border) !important; }
+      html:not(.dark) .text-green-400  { color: var(--status-green-text)  !important; }
+      html:not(.dark) .bg-green-400\/10 { background: var(--status-green-bg)   !important; }
+      html:not(.dark) .border-green-400\/20 { border-color: var(--status-green-border) !important; }
+
+      /* ── Light-mode: softer red status badge overrides ───────────────────── */
+      html:not(.dark) .text-red-500  { color: var(--status-red-text)  !important; }
+      html:not(.dark) .bg-red-500\/10 { background: var(--status-red-bg)   !important; }
+      html:not(.dark) .border-red-500\/20 { border-color: var(--status-red-border) !important; }
+
+      /* ── Light-mode: softer blue badge overrides (In Progress / Paid) ────── */
+      html:not(.dark) .text-blue-400  { color: var(--status-blue-text)  !important; }
+      html:not(.dark) .bg-blue-400\/10 { background: var(--status-blue-bg)   !important; }
+      html:not(.dark) .border-blue-400\/20 { border-color: var(--status-blue-border) !important; }
+
+      /* ── Light-mode: softer orange (pending) ─────────────────────────────── */
+      html:not(.dark) .text-orange-400 { color: var(--status-orange-text) !important; }
+
+      /* ── Light-mode: button secondary refinement ─────────────────────────── */
+      html:not(.dark) .bg-bright-sun-400 {
+        background-color: var(--bright-sun-400) !important;
+      }
+      html:not(.dark) .hover\:bg-bright-sun-500:hover {
+        background-color: var(--bright-sun-500) !important;
+      }
+
+      /* ── Light-mode: scrollbar ───────────────────────────────────────────── */
+      html:not(.dark) ::-webkit-scrollbar-track { background: #f0f2f5; }
+      html:not(.dark) ::-webkit-scrollbar-thumb { background: #c3c9d4; border-radius: 4px; }
+      html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #9aa2b1; }
+
+      /* ── Dark-mode: keep original scrollbar ─────────────────────────────── */
+      html.dark ::-webkit-scrollbar-track { background: #2d2d2d; }
+      html.dark ::-webkit-scrollbar-thumb { background: #4f4f4f; border-radius: 4px; }
+      html.dark ::-webkit-scrollbar-thumb:hover { background: #5d5d5d; }
+
+      /* ── Shared scrollbar width ──────────────────────────────────────────── */
+      ::-webkit-scrollbar { width: 8px; }
     </style>
   <script type="importmap">
 {

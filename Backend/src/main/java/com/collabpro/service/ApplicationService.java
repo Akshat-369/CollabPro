@@ -36,6 +36,10 @@ public class ApplicationService {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
 
+        if (project.getCreatedBy().getId().equals(applicant.getId())) {
+            throw new RuntimeException("You cannot apply to your own project");
+        }
+
         // Check for existing application
         com.collabpro.model.ProjectApplication existingApp = applicationRepository
                 .findByProjectIdAndApplicantId(projectId, applicant.getId())
